@@ -10,7 +10,8 @@ Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
 
 -----------------------------------------------------------
 
-Sjekkliste:
+SJEKKLISTE
+----------
 * [x] Koden er sjekket inn på github.com/kristiania-repository
 * [x] Opprett repository med Github Classroom link: https://classroom.github.com/a/U8dpT5Q0
 * [x] README.md inneholder en korrekt Github Actions badge
