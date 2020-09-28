@@ -8,9 +8,9 @@ pgr203innlevering2-eirik124 created by GitHub Classroom
 GRUPPEMEDLEMMER:
 Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
 
-============================================================
+-----------------------------------------------------------
 
-| Sjekkliste:
+Sjekkliste:
 * [x] Koden er sjekket inn på github.com/kristiania-repository
 * [x] Opprett repository med Github Classroom link: https://classroom.github.com/a/U8dpT5Q0
 * [x] README.md inneholder en korrekt Github Actions badge
@@ -28,4 +28,4 @@ Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
 * [ ] Dere har committed kode med begge prosjektdeltagernes GitHub konto
 * [ ] Alle prosjektdeltagerne har levert i på Canvas med link til Github repository
 
-|| 
+# Beskrivelse av prosjekt
