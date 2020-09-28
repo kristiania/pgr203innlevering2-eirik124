@@ -30,3 +30,6 @@ SJEKKLISTE
 * [ ] Alle prosjektdeltagerne har levert i på Canvas med link til Github repository
 
 # Beskrivelse av prosjekt
+Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvilling.
+
+
