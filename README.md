@@ -29,16 +29,13 @@ SJEKKLISTE
 * [ ] Dere har committed kode med begge prosjektdeltagernes GitHub konto
 * [ ] Alle prosjektdeltagerne har levert i på Canvas med link til Github repository
 
-# Beskrivelse av prosjekt
+## Beskrivelse av prosjekt
+
 Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvilling.
 
-## Getting Started
+### Hvordan det bygges
 
-To get a local copy up and running follow these simple steps.
+Tekst her
+* hehe
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-
-
+#### Hvordan det kjøres
