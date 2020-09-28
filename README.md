@@ -2,3 +2,6 @@
 
 # pgr203innlevering2-eirik124
 pgr203innlevering2-eirik124 created by GitHub Classroom
+
+GRUPPEMEDLEMMER:
+Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
