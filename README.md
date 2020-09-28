@@ -5,7 +5,7 @@ pgr203innlevering2-eirik124 created by GitHub Classroom
 
 -----------------------------------------------------------
 
-GRUPPEMEDLEMMER:
+#### GRUPPEMEDLEMMER:
 Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
 
 -----------------------------------------------------------
@@ -38,7 +38,7 @@ Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvillin
 Tekst her
 * hehe
 
-#### Hvordan det kjøres
+### Hvordan det kjøres
 
 
 
