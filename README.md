@@ -30,17 +30,17 @@ SJEKKLISTE ♥
 
 ## Beskrivelse av prosjekt
 
-Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvikling. Her har vi satt opp en Http-server og skrevet tester. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
+Oppgaven er utviklet med test-drevet parprogrammering, som har foregått ved at alle tre på gruppen har skrevet tester og passet denne til nestemann, som da i sin tur har fått testen til å passere.
 
 ### Hvordan det bygges
 Baseseres på programmet IntelliJ fremgangsmåte kan variere fra program til program
 
-Man bygger .jar filen med å velge View -> Tool Windows -> Maven da åpner et maven vindu seg under ```Lifecycle``` velg ```Package```så kjører den pakking og byggingen på et par sekunder og se neste avsnitt for hvordan man kjører programmet 
+Man bygger .jar-filen ved å velge View -> Tool Windows -> Maven. Da åpnes det et Maven-vindu under ```Lifecycle```. Man velger så ```Package``` og deretter kjører den pakking og bygging på et par sekunder.
 
 ### Hvordan det kjøres
 
-Man kjører serveren med jar filen med å kjøre ```java -jar target/http-server.jar``` eller hva man renamer filnen med etter build. 
-Default port er 8080. Nettsiden kjøres default på localhost:8080 eller hvilken port som blir satt av bruker
+Man kjører serveren med .jar-filen ved å kjøre ```java -jar target/http-server.jar``` eller det man renamer filen til etter build. 
+Default port er 8080. Nettsiden kjøres default på localhost:8080 eller den porten som blir satt av bruker.
 
 
 
