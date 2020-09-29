@@ -42,4 +42,12 @@ public class HttpServerTest {
         HttpClient client = new HttpClient("localhost", 10004, "/index.html");
         assertEquals(fileContent, client.getResponseBody());
     }
+
+    @Test
+    void shouldReturn404onMissingFile() throws IOException {
+        HttpServer server = new HttpServer(10005);
+        server.setDocumentRoot(new File("target"));
+        HttpClient client = new HttpClient("localhost", 10005, "/missingFile");
+        assertEquals(404, client.getStatusCode());
+    }
 }
