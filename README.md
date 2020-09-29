@@ -1,9 +1,6 @@
 ![Java CI with Maven](https://github.com/kristiania/pgr203innlevering2-eirik124/workflows/Java%20CI%20with%20Maven/badge.svg)
 
 # pgr203innlevering2-eirik124
-pgr203innlevering2-eirik124 created by GitHub Classroom
-
------------------------------------------------------------
 
 #### GRUPPEMEDLEMMER:
 Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
@@ -29,9 +26,11 @@ SJEKKLISTE ♥
 * [x] Dere har committed kode med alle prosjektdeltagernes GitHub konto
 * [x] Alle prosjektdeltagerne har levert i på Canvas med link til Github repository
 
+-----------------------------------------------------------
+
 ## Beskrivelse av prosjekt
 
-Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvilling. Her har vi satt opp en Http-server og skrevet koder. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
+Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvikling. Her har vi satt opp en Http-server og skrevet koder. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
 
 ### Hvordan det bygges
 
