@@ -26,9 +26,22 @@ public class HttpServer {
     }
 
     private static void handleRequest(Socket socket) throws IOException {
-        String responseLine = HttpClient.readLine(socket);
-        System.out.println(responseLine);
-        String response = "HTTP/1.1 200 OK\r\n" +
+        String responseCode = "200";  
+
+        String requestLine = HttpClient.readLine(socket);
+        System.out.println(requestLine);
+        
+        String requestTarget = requestLine.split(" ")[1];
+        int questionPos = requestTarget.indexOf('?');
+        if (questionPos != -1) {
+            String queryString = requestTarget.substring(questionPos+1);
+            int equalPos = queryString.indexOf('=');
+            String parameterValue = queryString.substring(equalPos+1);
+            responseCode = parameterValue;
+        }
+
+
+        String response = "HTTP/1.1 " + responseCode + " OK\r\n" +
                 "Content-Type: text/html; charset=utf-8\r\n" +
                 "Content-Length: 11\r\n" +
                 "\r\n" +
