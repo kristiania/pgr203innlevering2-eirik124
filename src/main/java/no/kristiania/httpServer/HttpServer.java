@@ -45,10 +45,14 @@ public class HttpServer {
                 writeResponse(clientSocket, "404", requestTarget + " not found");
                 return;
             }
-                
+
+            String contentType = "text/html";
+            if (targetFile.getName().endsWith(".txt")) {
+                contentType = "text/plain";
+            }
             String responseHeaders = "HTTP/1.1 200 OK\r\n" +
                     "Content-Length: " + targetFile.length() + "\r\n" +
-                    "Content-Type: text/plain\r\n" +
+                    "Content-Type: text/html\r\n" +
                     "\r\n";
             clientSocket.getOutputStream().write(responseHeaders.getBytes());
             try (FileInputStream inputStream = new FileInputStream(targetFile)) {
