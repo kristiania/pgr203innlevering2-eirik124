@@ -14,12 +14,12 @@ SJEKKLISTE ♥
 * [x] README.md inneholder en korrekt Github Actions badge
 * [x] mvn package bygger en executable jar-fil
 * [x] java -jar target/...jar (etter mvn package) starter opp en webserver
-* [ ] README.md beskriver prosjektet, hvordan man bygger det, hvordan man kjører serveren og hvilken URL den starter på
+* [x] README.md beskriver prosjektet, hvordan man bygger det, hvordan man kjører serveren og hvilken URL den starter på
 * [x] Webserveren kan levere statiske HTML- og CSS-filer
 * [ ] Webserveren kan liste eksisterende prosjektmedlemmer med HTTP GET
-* [ ] Webserveren kan serve mer enn én http request før den må restartes
+* [x] Webserveren kan serve mer enn én http request før den må restartes
 * [x] Koden inneholder et godt sett med tester og testene kjører i Github Actions. Test av serveren skal bruke deres egen http client klasse
-* [ ] Koden inneholder en HttpClient klasse med tester mot http://urlecho.appspot.com
+* [x] Koden inneholder en HttpClient klasse med tester mot http://urlecho.appspot.com
 * [x] GitHub repository er private
 * [x] Veilederne er lagt til som Collaborators på GitHub repository
   * PanRagon, SeventhDisaster, omamoh18, iaffs
@@ -30,7 +30,7 @@ SJEKKLISTE ♥
 
 ## Beskrivelse av prosjekt
 
-Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvikling. Her har vi satt opp en Http-server og skrevet koder. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
+Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvikling. Her har vi satt opp en Http-server og skrevet tester. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
 
 ### Hvordan det bygges
 Baseseres på programmet IntelliJ fremgangsmåte kan variere fra program til program
