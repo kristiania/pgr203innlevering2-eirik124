@@ -14,7 +14,7 @@ public class HttpServerTest {
     @Test
     void shouldReturnSuccessfulStatusCode() throws IOException {
         HttpServer server = new HttpServer(10001);
-        HttpClient client = new HttpClient( "localhost", 10001, "echo");
+        HttpClient client = new HttpClient( "localhost", 10001, "/echo");
         assertEquals(200, client.getStatusCode());
     }
 

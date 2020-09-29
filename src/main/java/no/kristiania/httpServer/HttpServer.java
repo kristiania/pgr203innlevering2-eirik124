@@ -42,7 +42,7 @@ public class HttpServer {
             File targetFile = new File(documentRoot, requestTarget);
 
             if (!targetFile.exists()) {
-                writeResponse(clientSocket, "404", requestTarget + " Not found");
+                writeResponse(clientSocket, "404", requestTarget + " not found");
                 return;
             }
                 
