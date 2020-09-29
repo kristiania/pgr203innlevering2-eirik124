@@ -21,32 +21,34 @@ public class HttpServer {
         }).start();
     }
 
-    public static void main(String[] args) throws IOException {
-        new HttpServer(8080);
-    }
-
-    private static void handleRequest(Socket socket) throws IOException {
-        String responseCode = "200";  
-
-        String requestLine = HttpClient.readLine(socket);
+    private void handleRequest(Socket clientSocket) throws IOException {
+        String requestLine = HttpClient.readLine(clientSocket);
         System.out.println(requestLine);
-        
+
         String requestTarget = requestLine.split(" ")[1];
+        String statusCode = null;
+        String body = null;
+
         int questionPos = requestTarget.indexOf('?');
         if (questionPos != -1) {
-            String queryString = requestTarget.substring(questionPos+1);
-            int equalPos = queryString.indexOf('=');
-            String parameterValue = queryString.substring(equalPos+1);
-            responseCode = parameterValue;
+            QueryString queryString = new QueryString(requestTarget.substring(questionPos + 1));
+            statusCode = queryString.getParameter("status");
+            body = queryString.getParameter( "body");
         }
 
+        if (statusCode == null) statusCode = "200";
+        if (body == null) body = "Hello <strong>World!</strong>";
 
-        String response = "HTTP/1.1 " + responseCode + " OK\r\n" +
-                "Content-Type: text/html; charset=utf-8\r\n" +
-                "Content-Length: 11\r\n" +
+        String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
+                "Content-Length: " + body.length() + "\r\n" +
+                "Content-Type: text/plain\r\n" +
                 "\r\n" +
-                "Hello World!";
+                body;
 
-        socket.getOutputStream().write(response.getBytes());
+        clientSocket.getOutputStream().write(response.getBytes());
+    }
+
+    public static void main(String[] args) throws IOException {
+        new HttpServer(8080);
     }
 }
