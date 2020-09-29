@@ -1,6 +1,7 @@
 package no.kristiania.httpServer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -37,6 +38,16 @@ public class HttpServer {
             QueryString queryString = new QueryString(requestTarget.substring(questionPos + 1));
             statusCode = queryString.getParameter("status");
             body = queryString.getParameter( "body");
+        } else if (!requestTarget.equals("/echo")){
+            File targetFile = new File(documentRoot, requestTarget);
+            String responseHeaders = "HTTP/1.1 200 OK\r\n" +
+                    "Content-Length: " + targetFile.length() + "\r\n" +
+                    "Content-Type: text/plain\r\n" +
+                    "\r\n";
+            clientSocket.getOutputStream().write(responseHeaders.getBytes());
+            try (FileInputStream inputStream = new FileInputStream(targetFile)) {
+                inputStream.transferTo(clientSocket.getOutputStream());
+            }
         }
 
         if (statusCode == null) statusCode = "200";
