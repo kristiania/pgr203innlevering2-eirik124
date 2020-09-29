@@ -53,7 +53,7 @@ public class HttpServer {
 
             String responseHeaders = "HTTP/1.1 200 OK\r\n" +
                     "Content-Length: " + targetFile.length() + "\r\n" +
-                    "Content-Type: text/html\r\n" +
+                    "Content-Type: text/plain\r\n" +
                     "\r\n";
             clientSocket.getOutputStream().write(responseHeaders.getBytes());
             try (FileInputStream inputStream = new FileInputStream(targetFile)) {
@@ -70,7 +70,7 @@ public class HttpServer {
     private void writeResponse(Socket clientSocket, String statusCode, String body) throws IOException {
         String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
                 "Content-Length: " + body.length() + "\r\n" +
-                "Content-Type: text/plain\r\n" +
+                "Content-Type: text/html\r\n" +
                 "\r\n" +
                 body;
 
