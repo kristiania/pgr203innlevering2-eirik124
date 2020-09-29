@@ -50,6 +50,7 @@ public class HttpServer {
             if (targetFile.getName().endsWith(".txt")) {
                 contentType = "text/plain";
             }
+
             String responseHeaders = "HTTP/1.1 200 OK\r\n" +
                     "Content-Length: " + targetFile.length() + "\r\n" +
                     "Content-Type: text/html\r\n" +
