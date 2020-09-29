@@ -25,7 +25,7 @@ SJEKKLISTE
 * [ ] Koden inneholder en HttpClient klasse med tester mot http://urlecho.appspot.com
 * [ ] GitHub repository er private
 * [ ] Veilederne er lagt til som Collaborators på GitHub repository
-* [ ] PanRagon SeventhDisaster omamoh18 iaffs
+  * PanRagon SeventhDisaster omamoh18 iaffs
 * [ ] Dere har committed kode med begge prosjektdeltagernes GitHub konto
 * [ ] Alle prosjektdeltagerne har levert i på Canvas med link til Github repository
 
