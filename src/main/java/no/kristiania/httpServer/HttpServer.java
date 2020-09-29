@@ -77,7 +77,8 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        new HttpServer(8080);
+        HttpServer server = new HttpServer(8080);
+        server.setDocumentRoot(new File("src/main/resources"));
     }
 
     public void setDocumentRoot(File documentRoot) {
