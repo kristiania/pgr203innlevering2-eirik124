@@ -2,7 +2,7 @@
 
 # pgr203innlevering2-eirik124
 
-#### GRUPPEMEDLEMMER:
+#### Gruppemedlemmer:
 Pål Anders Byenstuen, Eirik Lundanes og Vibeke Opgård.
 
 -----------------------------------------------------------
@@ -33,7 +33,7 @@ SJEKKLISTE ♥
 Oppgaven er utviklet med test-drevet parprogrammering, som har foregått ved at alle tre på gruppen har skrevet tester og passet denne til nestemann, som da i sin tur har fått testen til å passere.
 
 ### Hvordan det bygges
-Baseseres på programmet IntelliJ fremgangsmåte kan variere fra program til program
+Baseres på programmet IntelliJ fremgangsmåte kan variere fra program til program
 
 Man bygger .jar-filen ved å velge View -> Tool Windows -> Maven. Da åpnes det et Maven-vindu under ```Lifecycle```. Man velger så ```Package``` og deretter kjører den pakking og bygging på et par sekunder.
 
