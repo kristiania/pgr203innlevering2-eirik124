@@ -67,7 +67,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>no.kristiania.httpServer</mainClass>
+                                    <mainClass>no.kristiania.httpServer.HttpServer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
