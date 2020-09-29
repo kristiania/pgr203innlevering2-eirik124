@@ -33,11 +33,14 @@ SJEKKLISTE ♥
 Denne oppgaven er blitt utviklet med å parprogrammering og test-drevet utvikling. Her har vi satt opp en Http-server og skrevet koder. Vi har vært tre stykker på gruppen vår, og annenhver har failet og passert tester.
 
 ### Hvordan det bygges
+Baseseres på programmet IntelliJ fremgangsmåte kan variere fra program til program
 
-Det bygges
+Man bygger .jar filen med å velge View -> Tool Windows -> Maven da åpner et maven vindu seg under ```Lifecycle``` velg ```Package```så kjører den pakking og byggingen på et par sekunder og se neste avsnitt for hvordan man kjører programmet 
 
 ### Hvordan det kjøres
 
-Det kjøres
+Man kjører serveren med jar filen med å kjøre ```java -jar target/http-server.jar``` eller hva man renamer filnen med etter build. 
+Default port er 8080. Nettsiden kjøres default på localhost:8080 eller hvilken port som blir satt av bruker
+
 
 
