@@ -2,9 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>KristianiaProject</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
- <h1>Hei</h1>
+<h1>Project view</h1>
+
+<div id="projectMembers"></div>
+
+<div>
+    <a href="newWorker.html">Add new project member</a>
+</div>
 </body>
+<script>
+    fetch("/projectMembers")
+        .then(function(response) {
+            return response.text();
+        }).then(function(text) {
+        document.getElementById("projectMembers").innerHTML = text;
+    });
+</script>
 </html>
