@@ -10,6 +10,7 @@ public class HttpClient {
     private int statusCode;
     private Map<String, String> responseHeaders = new HashMap<>();
     private String responseBody;
+    private HttpMessage responseMessage;
 
     public HttpClient(final String hostname, int port, final String requestTarget) throws IOException {
         Socket socket = new Socket(hostname, port);
@@ -40,6 +41,20 @@ public class HttpClient {
             body.append((char)socket.getInputStream().read());
         }
         responseBody = body.toString();
+    }
+
+    public HttpClient(String hostname, int port, String requestTarget, String method, QueryString form) throws IOException {
+        Socket socket = new Socket(hostname, port);
+
+        String requestBody = form.getQueryString();
+
+        HttpMessage requestMessage = new HttpMessage(method + " " + requestTarget + " HTTP/1.1");
+        requestMessage.setHeader("Host", hostname);
+        requestMessage.setHeader("Content-Length", String.valueOf(requestBody.length()));
+        requestMessage.write(socket);
+        socket.getOutputStream().write(requestBody.getBytes());
+
+        responseMessage = HttpMessage.read(socket);
     }
 
     public static String readLine(Socket socket) throws IOException {
