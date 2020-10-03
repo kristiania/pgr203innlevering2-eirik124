@@ -11,7 +11,7 @@ import java.util.List;
 public class HttpServer {
 
     private File documentRoot;
-    private List<String> teamNames = new ArrayList<>();
+    private final List<String> teamNames = new ArrayList<>();
 
     public HttpServer(int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
@@ -35,6 +35,10 @@ public class HttpServer {
         String requestMethod = requestLine.split(" ")[0];
         String requestTarget = requestLine.split(" ")[1];
 
+        int questionPos = requestTarget.indexOf('?');
+
+        String requestPath = questionPos != -1 ? requestTarget.substring(0, questionPos) : requestTarget;
+
         if (requestMethod.equals("POST")) {
             HttpMessage requestMessage = new HttpMessage(requestLine);
             requestMessage.readHeaders(clientSocket);
@@ -49,49 +53,36 @@ public class HttpServer {
 
             HttpMessage responseMessage = new HttpMessage("HTTP/1.1 200 OK");
             responseMessage.write(clientSocket);
-            return;
-        }
-
-
-
-        String statusCode = null;
-        String body = null;
-
-        int questionPos = requestTarget.indexOf('?');
-        if (questionPos != -1) {
-            QueryString queryString = new QueryString(requestTarget.substring(questionPos + 1));
-            statusCode = queryString.getParameter("status");
-            body = queryString.getParameter( "body");
-        } else if (!requestTarget.equals("/echo")){
+        } else if (requestPath.equals("/echo")) {
+            handleEchoRequest(clientSocket, requestTarget, questionPos);
+        } else {
             File targetFile = new File(documentRoot, requestTarget);
 
             if (!targetFile.exists()) {
                 writeResponse(clientSocket, "404", requestTarget + " not found");
-                return;
-            }
+            } else {
+                String statusCode = "200";
+                String contentType;
 
-            String contentType = "text/html";
-            if (targetFile.getName().endsWith(".txt")) {
-                contentType = "text/plain";
-            }
-            if (targetFile.getName().endsWith(".css")) {
-                contentType = "text/css";
-            }
+                if (targetFile.getName().endsWith(".html")) {
+                    contentType = "text/html";
+                } else if (targetFile.getName().endsWith(".txt")){
+                    contentType = "text/plain";
+                } else {
+                    contentType = "text/css";
+                }
 
-            String responseHeaders = "HTTP/1.1 200 OK\r\n" +
-                    "Content-Length: " + targetFile.length() + "\r\n" +
-                    "Content-Type: " + contentType + "\r\n" +
-                    "\r\n";
-            clientSocket.getOutputStream().write(responseHeaders.getBytes());
-            try (FileInputStream inputStream = new FileInputStream(targetFile)) {
-                inputStream.transferTo(clientSocket.getOutputStream());
+                String responseHeaders = "HTTP/1.1 " + statusCode + " OK\r\n" +
+                        "Content-Length: " + targetFile.length() + "\r\n" +
+                        "Content-Type: " + contentType + "\r\n" +
+                        "\r\n";
+
+                clientSocket.getOutputStream().write(responseHeaders.getBytes());
+                try (FileInputStream inputStream = new FileInputStream(targetFile)) {
+                    inputStream.transferTo(clientSocket.getOutputStream());
+                }
             }
         }
-
-        if (statusCode == null) statusCode = "200";
-        if (body == null) body = "Hello <strong>World!</strong>";
-
-        writeResponse(clientSocket, statusCode, body);
     }
 
     private void writeResponse(Socket clientSocket, String statusCode, String body) throws IOException {
@@ -108,6 +99,27 @@ public class HttpServer {
         HttpServer server = new HttpServer(8080);
         System.out.print("Server is running on: localhost:8080 \n unless port is changed above");
         server.setDocumentRoot(new File("src/main/resources"));
+    }
+
+    private void handleEchoRequest(Socket clientSocket, String requestTarget, int questionPos) throws IOException {
+        String statusCode = "200";
+        String body = "Hello <strong>World</strong>!";
+        if (questionPos != -1) {
+            QueryString queryString = new QueryString(requestTarget.substring(questionPos + 1));
+            if (queryString.getParameter("status") != null) {
+                statusCode = queryString.getParameter("status");
+            }
+            if (queryString.getParameter("body") != null) {
+                body = queryString.getParameter("body");
+            }
+        }
+        String response = "HTTP/1.1 " + statusCode + " OK\r\n" +
+                "Content-Length: " + body.length() + "\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "\r\n" +
+                body;
+
+        clientSocket.getOutputStream().write(response.getBytes());
     }
 
     public void setDocumentRoot(File documentRoot) {

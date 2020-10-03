@@ -8,7 +8,7 @@ import java.util.Map;
 public class HttpClient {
 
     private int statusCode;
-    private Map<String, String> responseHeaders = new HashMap<>();
+    private final Map<String, String> responseHeaders = new HashMap<>();
     private String responseBody;
     private HttpMessage responseMessage;
 
