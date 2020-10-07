@@ -3,30 +3,36 @@ package no.kristiania.httpServer;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class QueryStringTest {
+
     @Test
-    void shouldRetrieveQueryParameter() {
+    void shouldReturnQueryParameter() {
         QueryString queryString = new QueryString("status=200");
         assertEquals("200", queryString.getParameter("status"));
     }
 
     @Test
-    void shouldRetrieveOtherQueryParameter() {
+    void shouldReturnNullForMissingParameter() {
         QueryString queryString = new QueryString("status=404");
-        assertEquals("404", queryString.getParameter("status"));
+        assertNull(queryString.getParameter("body"));
     }
 
     @Test
-    void shouldRetrieveParameterByName() {
-        QueryString queryString = new QueryString("text=Hello");
-        assertEquals(null, queryString.getParameter("status"));
-        assertEquals("Hello", queryString.getParameter("text"));
-    }
-    @Test
-    void shouldHandleMultipleParameters() {
-        QueryString queryString = new QueryString("text=Hello&status=200");
+    void shouldParseSeveralParameters() {
+        QueryString queryString = new QueryString("status=200&body=Hello");
         assertEquals("200", queryString.getParameter("status"));
-        assertEquals("Hello", queryString.getParameter("text"));
+        assertEquals("Hello", queryString.getParameter("body"));
     }
+
+    @Test
+    void shouldSerializeQueryString() {
+        QueryString queryString = new QueryString("status=200");
+        assertEquals("?status=200", queryString.getQueryString());
+        queryString.addParameter("body", "Hello");
+        assertEquals("?status=200&body=Hello", queryString.getQueryString());
+    }
+
 }
+

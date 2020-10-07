@@ -7,7 +7,6 @@ public class QueryString {
     private final Map<String, String> parameters = new LinkedHashMap<>();
 
     public QueryString(String queryString) {
-        if (queryString.isEmpty()) return;
         for (String parameter : queryString.split("&")) {
             int equalsPos = parameter.indexOf('=');
             String key = parameter.substring(0, equalsPos);
@@ -31,7 +30,7 @@ public class QueryString {
                     .append(parameter.getValue());
         }
 
-        return result.toString();
+        return "?" + result.toString();
     }
 
     public void addParameter(String key, String value) {

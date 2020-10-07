@@ -8,67 +8,88 @@ import java.nio.file.Files;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class HttpServerTest {
+class HttpServerTest {
 
     @Test
     void shouldReturnSuccessfulStatusCode() throws IOException {
-        HttpServer server = new HttpServer(10001);
-        HttpClient client = new HttpClient( "localhost", 10001, "/echo");
+        new HttpServer(10001);
+        HttpClient client = new HttpClient("localhost", 10001, "/echo");
         assertEquals(200, client.getStatusCode());
     }
 
     @Test
     void shouldReturnUnsuccessfulStatusCode() throws IOException {
-        HttpServer server = new HttpServer(10002);
+        new HttpServer(10002);
         HttpClient client = new HttpClient("localhost", 10002, "/echo?status=404");
         assertEquals(404, client.getStatusCode());
     }
 
     @Test
-    void shouldReturnHttpHeaders() throws IOException {
+    void shouldReturnContentLength() throws IOException {
         new HttpServer(10003);
         HttpClient client = new HttpClient("localhost", 10003, "/echo?body=HelloWorld");
         assertEquals("10", client.getResponseHeader("Content-Length"));
     }
 
     @Test
-    void shouldReturnFileContent() throws IOException {
-        HttpServer server = new HttpServer(10004);
-        File documentRoot = new File("target");
-        server.setDocumentRoot(documentRoot);
-        String fileContent = "Hello " + new Date();
-        Files.writeString(new File(documentRoot, "index.html").toPath(), fileContent);
-        HttpClient client = new HttpClient("localhost", 10004, "/index.html");
-        assertEquals(fileContent, client.getResponseBody());
+    void shouldReturnResponseBody() throws IOException {
+        new HttpServer(10004);
+        HttpClient client = new HttpClient("localhost", 10004, "/echo?body=HelloWorld");
+        assertEquals("HelloWorld", client.getResponseBody());
     }
 
     @Test
-    void shouldReturn404onMissingFile() throws IOException {
+    void shouldReturnFileFromDisk() throws IOException {
         HttpServer server = new HttpServer(10005);
-        server.setDocumentRoot(new File("target"));
-        HttpClient client = new HttpClient("localhost", 10005, "/missingFile");
-        assertEquals(404, client.getStatusCode());
+        File contentRoot = new File("target/");
+        server.setContentRoot(contentRoot);
+
+        String fileContent = "Hello World " + new Date();
+        Files.writeString(new File(contentRoot, "test.txt").toPath(), fileContent);
+
+        HttpClient client = new HttpClient("localhost", 10005, "/test.txt");
+        assertEquals(fileContent, client.getResponseBody());
+        assertEquals("text/plain", client.getResponseHeader("Content-Type"));
     }
 
     @Test
     void shouldReturnCorrectContentType() throws IOException {
         HttpServer server = new HttpServer(10006);
-        File documentRoot = new File("target");
-        server.setDocumentRoot(documentRoot);
-        Files.writeString(new File(documentRoot, "plain.txt").toPath(), "Plain text");
-        HttpClient client = new HttpClient("localhost", 10006, "/plain.txt");
-        assertEquals("text/plain", client.getResponseHeader("Content-Type"));
+        File contentRoot = new File("target/");
+        server.setContentRoot(contentRoot);
+
+        Files.writeString(new File(contentRoot, "index.html").toPath(), "<h2>Hello World</h2>");
+
+        HttpClient client = new HttpClient("localhost", 10006, "/index.html");
+        assertEquals("text/html", client.getResponseHeader("Content-Type"));
     }
 
     @Test
-    void shouldPostTeamMember() throws IOException {
+    void shouldReturn404IfFileNotFound() throws IOException {
+        HttpServer server = new HttpServer(10007);
+        File contentRoot = new File("target/");
+        server.setContentRoot(contentRoot);
+
+        HttpClient client = new HttpClient("localhost", 10007, "/notFound.txt");
+        assertEquals(404, client.getStatusCode());
+    }
+
+    @Test
+    void shouldPostNewMember() throws IOException {
         HttpServer server = new HttpServer(10008);
-        QueryString members = new QueryString("");
-        members.addParameter("name", "Eirik");
-        members.addParameter("email", "test@email.com");
-        new HttpClient("localhost", 10008, "/members", "POST", members);
+        HttpClient client = new HttpClient("localhost", 10008, "/api/members", "POST", "name=Eirik&epost=test@email.com");
+        assertEquals(200, client.getStatusCode());
         assertEquals(List.of("Eirik"), server.getTeamNames());
     }
+
+    @Test
+    void shouldReturnExistingProducts() throws IOException {
+        HttpServer server = new HttpServer(10009);
+        server.getTeamNames().add("Eirik");
+        HttpClient client = new HttpClient("localhost", 10009, "/api/projectMembers");
+        assertEquals("<ul><li>Eirik</li></ul>", client.getResponseBody());
+    }
+
 }

@@ -8,66 +8,42 @@ import java.util.Map;
 public class HttpClient {
 
     private int statusCode;
-    private final Map<String, String> responseHeaders = new HashMap<>();
+    private Map<String, String> responseHeaders = new HashMap<>();
     private String responseBody;
-    private HttpMessage responseMessage;
 
+    //Constructor that is being called every time we use the method new
     public HttpClient(final String hostname, int port, final String requestTarget) throws IOException {
+        this(hostname, port, requestTarget, "GET", null);
+    }
+
+    //Another constructor
+    public HttpClient(final String hostname, int port, final String requestTarget, final String httpMethod, String requestBody) throws IOException {
+        // Connecting to the server
         Socket socket = new Socket(hostname, port);
 
-        String request = "GET " + requestTarget + " HTTP/1.1\r\n" +
+        String contentLengthHeader = requestBody != null ? "Content-Length: " + requestBody.length() + "\r\n" : "";
+
+        String request = httpMethod + " " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + hostname + "\r\n" +
+                contentLengthHeader +
                 "\r\n";
 
+        // sending a request to the server to handle
         socket.getOutputStream().write(request.getBytes());
 
-        String responseLine = readLine(socket);
+        if (requestBody != null) {
+            socket.getOutputStream().write(requestBody.getBytes());
+        }
+
+        HttpMessage response = new HttpMessage(socket);
+
+        String responseLine = response.getStartLine();
+        responseHeaders = response.getHeaders();
+        responseBody = response.getBody();
+
         String[] responseLineParts = responseLine.split(" ");
 
         statusCode = Integer.parseInt(responseLineParts[1]);
-
-        String headerLine;
-        while (!(headerLine = readLine(socket)).isEmpty()) {
-            int colonPos = headerLine.indexOf(':');
-            String headerName = headerLine.substring(0, colonPos);
-            String headerValue = headerLine.substring(colonPos+1).trim();
-
-            responseHeaders.put(headerName, headerValue);
-        }
-
-        int contentLength = Integer.parseInt(getResponseHeader("Content-Length"));
-        StringBuilder body = new StringBuilder();
-        for (int i = 0; i < contentLength; i++) {
-            body.append((char)socket.getInputStream().read());
-        }
-        responseBody = body.toString();
-    }
-
-    public HttpClient(String hostname, int port, String requestTarget, String method, QueryString form) throws IOException {
-        Socket socket = new Socket(hostname, port);
-
-        String requestBody = form.getQueryString();
-
-        HttpMessage requestMessage = new HttpMessage(method + " " + requestTarget + " HTTP/1.1");
-        requestMessage.setHeader("Host", hostname);
-        requestMessage.setHeader("Content-Length", String.valueOf(requestBody.length()));
-        requestMessage.write(socket);
-        socket.getOutputStream().write(requestBody.getBytes());
-
-        responseMessage = HttpMessage.read(socket);
-    }
-
-    public static String readLine(Socket socket) throws IOException {
-        StringBuilder line = new StringBuilder();
-        int c;
-        while ((c = socket.getInputStream().read()) != -1) {
-            if (c == '\r') {
-                socket.getInputStream().read();
-                break;
-            }
-            line.append((char)c);
-        }
-        return line.toString();
     }
 
     public static void main(String[] args) throws IOException {
