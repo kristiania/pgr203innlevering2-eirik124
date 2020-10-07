@@ -74,7 +74,6 @@ class HttpServerTest {
 
         HttpClient client = new HttpClient("localhost", 10007, "/notFound.txt");
         assertEquals(404, client.getStatusCode());
-        //hei
     }
 
     @Test
