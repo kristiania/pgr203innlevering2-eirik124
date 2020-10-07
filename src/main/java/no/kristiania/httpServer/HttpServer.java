@@ -43,7 +43,7 @@ public class HttpServer {
         if (requestMethod.equals("POST")) {
             QueryString requestParameter = new QueryString(request.getBody());
 
-            teamMemberNames.add(requestParameter.getParameter("name"));
+            teamMemberNames.add(requestParameter.getParameter("full_name"));
             String body = "Okay";
             String response = "HTTP/1.1 200 OK\r\n" +
                     "Content-Length: " + body.length() + "\r\n" +
